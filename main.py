@@ -27,9 +27,13 @@ class App(tk.Tk):
         self.button = tk.Button(self, text='Click Me')
         self.button['command'] = self.button_clicked
         self.button.pack()
+        self.text = tk.Text(self, height=2, width=20)
+        self.text.pack()
+        self.text.insert(tk.END,"some text")
+
 
     def button_clicked(self):
-        T = tk.Text(self, height=500, width=200)
+        T = tk.Text(self, height=2, width=20)
         T.pack()
         self.label.pack()
 
@@ -43,6 +47,6 @@ if __name__ == '__main__':
     cfg = Programconfig("config.csv")
     cfg.readconfig()
 
-    app = App('myTitle','300x50')
+    app = App('myTitle','300x500')
     app.mainloop()
 
