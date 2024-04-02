@@ -22,24 +22,36 @@ class App(tk.Tk):
         super().__init__()
         self.title(Title)
         self.geometry(Geometry)
-        self.label = tk.Label(self, text="Hello")
-        self.label.pack()
-        self.button = tk.Button(self, text='Click Me')
-        self.button['command'] = self.button_clicked
-        self.button.pack()
-        self.text = tk.Text(self, height=2, width=20)
-        self.text.pack()
-        self.text.insert(tk.END,"some text")
+        self.label1 = tk.Label(self, text="Hello")
+        self.label2 = tk.Label(self, text="Parameter")
+        self.label1.grid(row = 0, column = 0, pady = 2)
+        self.label2.grid(row=0, column=1, pady=2)
+        self.button1 = tk.Button(self, text='Click Me')
+        self.button1['command'] = self.button1_clicked
+        self.button1.grid(row = 3, column = 1)
+        self.button2 = tk.Button(self, text='Click Me')
+        self.button2['command'] = self.button2_clicked
+        self.button2.grid(row = 3, column = 2)
+        self.text1 = tk.Text(self, height=2, width=20)
+        self.text1.grid(row=2,column = 1)
+        self.text1.insert(tk.END,"some text")
+        self.text2 = tk.Text(self, height=2, width=20)
+        self.text2.grid(row=2, column=2)
+        self.text2.insert(tk.END, "more text")
+
+        self.check1 = tk.Checkbutton(self)
+        self.check1.grid(row=1, column=0)
+        self.check2 = tk.Checkbutton(self)
+        self.check2.grid(row=2, column=0)
 
 
-    def button_clicked(self):
-        T = tk.Text(self, height=2, width=20)
-        T.pack()
-        self.label.pack()
+    def button1_clicked(self):
+        # T = tk.Text(self, height=2, width=20)
+        self.text1.insert(tk.END, "longer.........text")
 
-
-
-
+    def button2_clicked(self):
+        # T = tk.Text(self, height=2, width=20)
+        self.text2.insert(tk.END, "longer.........text")
 
 
 if __name__ == '__main__':
@@ -47,6 +59,6 @@ if __name__ == '__main__':
     cfg = Programconfig("config.csv")
     cfg.readconfig()
 
-    app = App('myTitle','300x500')
+    app = App('myTitle','500x500')
     app.mainloop()
 
