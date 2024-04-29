@@ -6,15 +6,28 @@ import tkinter as tk
 class Programconfig:
     def __init__(self, configfile):
         # A List of words
-        self.cfgdata = []
+        self.cfgdata = {}
         self.cfgfile = configfile
+        self.cfgerror = []
     def readconfig(self):
         try:
             with open(self.cfgfile, "r") as filehandle:
                 for line in csv.reader(filehandle):
                     print(line)
+                    if len(line) > 1:
+                        self.cfgdata[line[0]] = line[1]
+                    else:
+                        self.cfgerror.append(line[0])
+        except IOError:
+            print("Error opening file")
         except:
-            print("Error on open file for read")
+            print("Error in config file")
+
+    def printconfig(self):
+        print(self.cfgdata)
+        if len(self.cfgerror) > 0:
+            print("Error in config file:")
+            print(self.cfgerror)
 
 
 class App(tk.Tk):
@@ -58,6 +71,7 @@ if __name__ == '__main__':
     print("Program Config")
     cfg = Programconfig("config.csv")
     cfg.readconfig()
+    cfg.printconfig()
 
     app = App('myTitle','500x500')
     app.mainloop()
