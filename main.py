@@ -14,8 +14,8 @@ class Programconfig:
         try:
             with open(self.cfgfile, "r") as filehandle:
                 for line in csv.reader(filehandle):
-                    print(line)
-                    print(len(line))
+                    # print(line)
+                    # print(len(line))
                     if len(line) > 1:
                         self.cfgdata[line[0]] = line[1]
                     elif len(line) == 1:
@@ -31,7 +31,7 @@ class Programconfig:
     def printconfig(self):
         for key in self.cfgdata:
             print (key,self.cfgdata[key])
-        print(self.cfgdata)
+        # print(self.cfgdata)
         if len(self.cfgignore) > 0:
             print("IGNORED in config file:")
             print(self.cfgignore)
@@ -79,6 +79,7 @@ if __name__ == '__main__':
     cfg = Programconfig("config.csv")
     cfg.readconfig()
     cfg.printconfig()
+    for cfg.cfgdata
 
     app = App('myTitle','500x500')
     app.mainloop()
