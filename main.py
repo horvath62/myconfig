@@ -78,8 +78,10 @@ if __name__ == '__main__':
 
     cfg = Programconfig("config.csv")
     cfg.readconfig()
-    cfg.printconfig()
-    for cfg.cfgdata
+    # cfg.printconfig()
+    for key in cfg.cfgdata:
+        print(key,cfg.cfgdata[key])
+        # if key starts with # then....
 
     app = App('myTitle','500x500')
     app.mainloop()
