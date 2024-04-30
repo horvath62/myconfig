@@ -8,26 +8,33 @@ class Programconfig:
         # A List of words
         self.cfgdata = {}
         self.cfgfile = configfile
-        self.cfgerror = []
+        self.cfgignore = []
+        print("Program Config")
     def readconfig(self):
         try:
             with open(self.cfgfile, "r") as filehandle:
                 for line in csv.reader(filehandle):
                     print(line)
+                    print(len(line))
                     if len(line) > 1:
                         self.cfgdata[line[0]] = line[1]
+                    elif len(line) == 1:
+                        self.cfgignore.append(line[0])
                     else:
-                        self.cfgerror.append(line[0])
+                        pass
+
         except IOError:
-            print("Error opening file")
+            print("Exception opening file")
         except:
-            print("Error in config file")
+            print("Exception in config file")
 
     def printconfig(self):
+        for key in self.cfgdata:
+            print (key,self.cfgdata[key])
         print(self.cfgdata)
-        if len(self.cfgerror) > 0:
-            print("Error in config file:")
-            print(self.cfgerror)
+        if len(self.cfgignore) > 0:
+            print("IGNORED in config file:")
+            print(self.cfgignore)
 
 
 class App(tk.Tk):
@@ -68,7 +75,7 @@ class App(tk.Tk):
 
 
 if __name__ == '__main__':
-    print("Program Config")
+
     cfg = Programconfig("config.csv")
     cfg.readconfig()
     cfg.printconfig()
