@@ -42,6 +42,9 @@ class App(tk.Tk):
         super().__init__()
         self.title(Title)
         self.geometry(Geometry)
+
+        self.textboxes = []
+
         self.label1 = tk.Label(self, text="Hello")
         self.label2 = tk.Label(self, text="Parameter")
         self.label1.grid(row = 0, column = 0, pady = 2)
@@ -64,6 +67,11 @@ class App(tk.Tk):
         self.check2 = tk.Checkbutton(self)
         self.check2.grid(row=2, column=0)
 
+    def add_cfgline(self,index,key,value):
+        textbox = tk.Text(self, height=2, width=20)
+        textbox.grid(row=index, column=1)
+        self.textboxes.append(textbox)
+
 
     def button1_clicked(self):
         # T = tk.Text(self, height=2, width=20)
@@ -78,11 +86,18 @@ if __name__ == '__main__':
 
     cfg = Programconfig("config.csv")
     cfg.readconfig()
+
+
     # cfg.printconfig()
     for key in cfg.cfgdata:
         print(key,cfg.cfgdata[key])
         # if key starts with # then....
 
+
     app = App('myTitle','500x500')
+
+    #app.create_texboxarray()
+    app.add_cfgline(4,"key","value")
+    app.add_cfgline(5, "key", "value")
     app.mainloop()
 
