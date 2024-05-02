@@ -17,10 +17,12 @@ class Programconfig:
                     # print(line)
                     # print(len(line))
                     if len(line) > 1:
+                        self.cfgdata[line[0]] = line[1]
                         if line[0][0] == "#":
                             self.cfgignore.append(' '.join(line))
                         else:
-                            self.cfgdata[line[0]] = line[1]
+                            pass
+
                     elif len(line) == 1:
                         self.cfgignore.append(line[0])
                     else:
@@ -49,6 +51,7 @@ class App(tk.Tk):
 
         self.textboxes = []
         self.buttoncomment = []
+        self.checkcomment = []
 
         self.label1 = tk.Label(self, text="Hello")
         self.label2 = tk.Label(self, text="Parameter")
@@ -69,16 +72,16 @@ class App(tk.Tk):
 
         self.check1 = tk.Checkbutton(self)
         self.check1.grid(row=1, column=0)
-        self.check2 = tk.Checkbutton(self)
-        self.check2.grid(row=2, column=0)
+
 
     def add_cfgtextbox(self,index,key,value):
+
         textbox = tk.Text(self, height=1, width=20)
-        textbox.grid(row=index, column=1)
+        textbox.grid(row=index, column=2)
         textbox.insert(tk.END, key)
         self.textboxes.append(textbox)
         textbox = tk.Text(self, height=1, width=20)
-        textbox.grid(row=index, column=2)
+        textbox.grid(row=index, column=3)
         textbox.insert(tk.END, value)
         self.textboxes.append(textbox)
 
