@@ -48,6 +48,7 @@ class App(tk.Tk):
         self.geometry(Geometry)
 
         self.textboxes = []
+        self.buttoncomment = []
 
         self.label1 = tk.Label(self, text="Hello")
         self.label2 = tk.Label(self, text="Parameter")
