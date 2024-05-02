@@ -57,21 +57,16 @@ class App(tk.Tk):
         self.label2 = tk.Label(self, text="Parameter")
         self.label1.grid(row = 0, column = 0, pady = 2)
         self.label2.grid(row=0, column=1, pady=2)
-        self.button1 = tk.Button(self, text='Click Me')
-        self.button1['command'] = self.button1_clicked
-        self.button1.grid(row = 3, column = 1)
-        self.button2 = tk.Button(self, text='Click Me')
-        self.button2['command'] = self.button2_clicked
-        self.button2.grid(row = 3, column = 2)
-        self.text1 = tk.Text(self, height=2, width=20)
-        self.text1.grid(row=2,column = 1)
-        self.text1.insert(tk.END,"some text")
-        self.text2 = tk.Text(self, height=2, width=20)
-        self.text2.grid(row=2, column=2)
-        self.text2.insert(tk.END, "more text")
-
         self.check1 = tk.Checkbutton(self)
         self.check1.grid(row=1, column=0)
+        self.button1 = tk.Button(self, text='Click Me')
+        self.button1['command'] = self.button1_clicked
+        self.button1.grid(row = 2, column = 1)
+        self.button2 = tk.Button(self, text='Click Me')
+        self.button2['command'] = self.button2_clicked
+        self.button2.grid(row = 2, column = 2)
+
+
 
 
     def add_cfgtextbox(self,index,key,value):
