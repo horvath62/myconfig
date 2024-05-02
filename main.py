@@ -62,9 +62,9 @@ class App(tk.Tk):
         self.button1 = tk.Button(self, text='Click Me')
         self.button1['command'] = self.button1_clicked
         self.button1.grid(row = 2, column = 1)
-        self.button2 = tk.Button(self, text='Click Me')
-        self.button2['command'] = self.button2_clicked
-        self.button2.grid(row = 2, column = 2)
+        self.buttonsave = tk.Button(self, text='SAVE')
+        self.buttonsave['command'] = self.buttonsave_clicked
+        self.buttonsave.grid(row = 2, column = 2)
 
 
 
@@ -82,12 +82,14 @@ class App(tk.Tk):
 
 
     def button1_clicked(self):
-        # T = tk.Text(self, height=2, width=20)
-        self.text1.insert(tk.END, "longer.........text")
+        # parameter from text boxes
+        for line in self.textboxes:
+            print(line.get("1.0",'end-1c'))
 
-    def button2_clicked(self):
-        # T = tk.Text(self, height=2, width=20)
-        self.text2.insert(tk.END, "longer.........text")
+
+    def buttonsave_clicked(self):
+        # save parameters
+        pass
 
 
 if __name__ == '__main__':
