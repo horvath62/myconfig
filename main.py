@@ -50,6 +50,8 @@ class App(tk.Tk):
         self.geometry(Geometry)
 
         self.textboxes = []
+        self.textbox_key = {}
+        self.textbox_value = {}
         self.buttoncomment = []
         self.checkcomment = []
 
@@ -71,20 +73,24 @@ class App(tk.Tk):
 
     def add_cfgtextbox(self,index,key,value):
 
+        print(">>",index, key, value)
+
+        rowoffset = 6
         textbox = tk.Text(self, height=1, width=20)
-        textbox.grid(row=index, column=2)
+        textbox.grid(row=index+rowoffset, column=2)
         textbox.insert(tk.END, key)
-        self.textboxes.append(textbox)
+        self.textbox_key[index] = textbox
         textbox = tk.Text(self, height=1, width=20)
-        textbox.grid(row=index, column=3)
+        textbox.grid(row=index+rowoffset, column=3)
         textbox.insert(tk.END, value)
-        self.textboxes.append(textbox)
+        self.textbox_value[index] = textbox
 
 
     def button1_clicked(self):
         # parameter from text boxes
-        for line in self.textboxes:
-            print(line.get("1.0",'end-1c'))
+        for index in range(len(self.textbox_key)):
+            print("###", index, self.textbox_key[index].get(1.0, "end-1c"),self.textbox_value[index].get(1.0, "end-1c"))
+            # self.textbox_value[index])
 
 
     def buttonsave_clicked(self):
@@ -106,10 +112,10 @@ if __name__ == '__main__':
     #app.create_texboxarray()
 
 
-    for index, key in enumerate(cfg.cfgdata):
-        print(index,key,cfg.cfgdata[key])
+    for index, key in enumerate(cfg.cfgdata, start=0):
+        print("==>",index,key,cfg.cfgdata[key])
         # if key starts with # then....
-        app.add_cfgtextbox(index+6,key,cfg.cfgdata[key])
+        app.add_cfgtextbox(index,key,cfg.cfgdata[key])
 
 
     app.mainloop()
