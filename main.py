@@ -20,6 +20,8 @@ class Programconfig:
         print("Program Config")
     def readconfig(self):
         try:
+            self.cfgdata = {}
+            self.cfgignore = {}
             with open(self.cfgfile, "r") as filehandle:
                 for line in csv.reader(filehandle):
                     # print(line)
@@ -63,13 +65,10 @@ class App(tk.Tk):
         self.title(title)
         self.geometry(Geometry)
 
-        self.textboxes = []
         self.textbox_key = {}
         self.textbox_value = {}
         self.label_index = {}
         self.newcfg = {}
-        self.buttoncomment = []
-        self.checkcomment = []
 
         self.labelfilename = tk.Label(self, text="Config file:"+cfgfile)
         self.labelfilename.grid(row = 0, column = 0, columnspan= 2)
@@ -143,11 +142,16 @@ class App(tk.Tk):
             print("Exception in write")
         filehandle.close()
 
-    def buttonread_clicked(self):
         # Read config from file
         print("READ EVENT")
         global cfg
+        cfg.readconfig()
         cfg.printconfig()
+
+        self.textbox_init()
+        self.create_textboxes()
+
+    def textbox_init(self):
         # first destroy the text boxes before reading in new
         textbox_count = len(self.textbox_key)
         for index in range(textbox_count):
@@ -157,11 +161,19 @@ class App(tk.Tk):
         self.textbox_key = {}
         self.textbox_value = {}
         self.label_index = {}
+        self.textbox_key = {}
+        self.textbox_value = {}
+        self.label_index = {}
+        self.newcfg = {}
 
+    def buttonread_clicked(self):
+        # Read config from file
+        print("READ EVENT")
+        global cfg
         cfg.readconfig()
-        print("cfg")
         cfg.printconfig()
 
+        self.textbox_init()
         self.create_textboxes()
 
 
