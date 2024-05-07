@@ -92,10 +92,28 @@ class App(tk.Tk):
             print("###", index, self.textbox_key[index].get(1.0, "end-1c"),self.textbox_value[index].get(1.0, "end-1c"))
             # self.textbox_value[index])
 
-
     def buttonsave_clicked(self):
         # save parameters
         pass
+
+        try:
+            with open(self.cfgfile, "w") as filehandle:
+
+                for index in range(len(self.textbox_key)):
+                    filehandle.writelines(self.textbox_key[index].get(1.0, "end-1c"),",",
+                          self.textbox_value[index].get(1.0, "end-1c"))
+                    # self.textbox_value[index])
+                    filehandle.close()
+
+        except IOError:
+            print("Exception opening file")
+        except Exception as e:
+            print("Exception in config file:",e)
+
+
+
+
+
 
 
 if __name__ == '__main__':
