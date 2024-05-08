@@ -59,7 +59,7 @@ class Programconfig:
             print("Exception in write")
 
 class App(tk.Tk):
-    def __init__(self, title, cfgfile, Geometry):
+    def __init__(self, title, cfgfile, cfgdata, Geometry):
         super().__init__()
         self.cfgfile = cfgfile
         self.title(title)
@@ -68,6 +68,7 @@ class App(tk.Tk):
         self.textbox_key = {}
         self.textbox_value = {}
         self.label_index = {}
+        self.cfgdata = cfgdata
         self.newcfg = {}
 
         self.labelfilename = tk.Label(self, text="Config file:"+cfgfile)
@@ -83,7 +84,6 @@ class App(tk.Tk):
         self.buttonread = tk.Button(self, text='READ')
         self.buttonread['command'] = self.buttonread_clicked
         self.buttonread.grid(row = 2, column = 0)
-
 
     def add_cfgtextbox(self,index,key,value):
 
@@ -103,9 +103,9 @@ class App(tk.Tk):
         self.textbox_value[index] = textbox
 
     def create_textboxes(self):
-        for index, key in enumerate(cfg.cfgdata, start=0):
-            print("==>", index, key, cfg.cfgdata[key])
-            app.add_cfgtextbox(index, key, cfg.cfgdata[key])
+        for index, key in enumerate(self.cfgdata, start=0):
+            print("==>", index, key, self.cfgdata[key])
+            self.add_cfgtextbox(index, key, self.cfgdata[key])
 
     def get_textboxes(self):
         print("TextBoxes count:",len(self.textbox_key))
@@ -187,7 +187,7 @@ if __name__ == '__main__':
 
     print(cfg.cfgfile)
 
-    app = App("LineMaker", cfg.cfgfile, '500x500')
+    app = App("LineMaker", cfg.cfgfile, cfg.cfgdata, '500x500')
     app.create_textboxes()
 
     '''
