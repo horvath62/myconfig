@@ -24,7 +24,7 @@ class Programconfig:
             self.cfgignore = {}
             with open(self.cfgfile, "r") as filehandle:
                 for line in csv.reader(filehandle):
-                    print(line)
+                    print("read:",line)
                     # print(len(line))
                     if len(line) > 1:
                         self.cfgdata[line[0]] = line[1]
@@ -49,7 +49,7 @@ class Programconfig:
             for line in self.cfgignore:
                 print(line)
 
-    def writeconfig(self,config,cfgfile):
+    def writeconfig(self,config):
         try:
             with open(self.cfgfile, "w") as filehandle:
                 for line in config:
@@ -121,15 +121,15 @@ class App(tk.Tk):
             print("==>", index, key, self.cfgdata[key])
             self.add_cfgtextbox(index, key, self.cfgdata[key])
 
-        self.insert = tk.Button(self, text='INSERT NEW CONFIG')
+        self.insert = tk.Button(self, text='INSERT')
         self.insert['command'] = self.buttoninsert_clicked
-        self.insert.grid(row = self.rowoffset+len(self.textbox_key), column = 1, pady=5)
+        self.insert.grid(row = self.rowoffset+len(self.textbox_key), column = 0, pady=5)
         self.buttonsave = tk.Button(self, text='SAVE')
         self.buttonsave['command'] = self.buttonsave_clicked
-        self.buttonsave.grid(row = self.rowoffset+len(self.textbox_key), column = 2, pady=5)
+        self.buttonsave.grid(row = 0, column = 4)
         self.buttonread = tk.Button(self, text='READ')
         self.buttonread['command'] = self.buttonread_clicked
-        self.buttonread.grid(row = self.rowoffset+len(self.textbox_key), column = 0, pady=5)
+        self.buttonread.grid(row = 0, column = 3)
 
     def add_cfgtextbox(self,index,key,value):
         print(">>",index, key, value)
@@ -153,10 +153,22 @@ class App(tk.Tk):
             #print("get", index, self.textbox_key[index].get(1.0, "end-1c"))
             key = self.textbox_key[index].get(1.0, "end-1c")
             value = self.textbox_value[index].get(1.0, "end-1c")
-            print("get:",key,value)
-            if len(key) > 0:
-                print("###", index, key, value)
+            #print("get:",key,value)
+            print("###", index, key, value)
+            if key in self.newcfg:
+                print("Duplicate Key:"+key)
+                # cant have duplicate keys
+                pass
+
+            elif len(key) > 0:
+                print("len(key)>0t:",index, key,value)
                 self.newcfg[key] = value
+
+            else:
+                print("POP:",index)
+                print("len(self.textbox_key",len(self.textbox_key))
+
+
 
     def buttoninsert_clicked(self):
         # parameter from text boxes
@@ -172,18 +184,20 @@ class App(tk.Tk):
 
     def buttonsave_clicked(self):
         # save parameters
-        print("SAVE EVENT")
+        print("SAVE EVENT:")
         self.get_textboxes()
+
+        print("newcfg len",len(self.newcfg))
         print(self.newcfg)
         pass
         try:
             with open(self.cfgfile, "w") as filehandle:
                 for key in self.newcfg:
-                    keyvalue = key+","+self.newcfg[key]
-                    filehandle.write(keyvalue+"\n")
+                    keyvalue = str(key)+","+str(self.newcfg[key])+"\n"
+                    filehandle.write(keyvalue)
                     print(keyvalue)
-        except:
-            print("Exception in write")
+        except e:
+            print("Exception in write",e)
         filehandle.close()
 
         # Read config from file
@@ -198,9 +212,9 @@ class App(tk.Tk):
 
     def buttonread_clicked(self):
         # Read config from file
+        print("READ EVENT:")
         cfg = Programconfig(self.cfgfile)
         cfg.readconfig()
-        print("READ:")
         cfg.printconfig()
         self.cfgdata = cfg.cfgdata
         self.textbox_init()
