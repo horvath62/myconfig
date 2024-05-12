@@ -73,13 +73,11 @@ class App(tk.Tk):
 
         self.check1 = tk.Checkbutton(self)
         self.check1.grid(row=0, column=0)
-        self.label1filename = tk.Label(self, text="Config file:"+cfgfile)
-        self.label1filename.grid(row = 0, column = 0, columnspan= 2)
-        self.textbox1= tk.Text(self, height=1, width=20)
-        self.textbox1.grid(row=0, column=2)
-        self.textbox1.insert(tk.END, self.cfgfile)
-
-
+        self.labelfilename = tk.Label(self, text="Default Config file:"+cfgfile)
+        self.labelfilename.grid(row = 0, column = 0, columnspan= 2)
+        self.textboxcfgfile= tk.Text(self, height=1, width=20)
+        self.textboxcfgfile.grid(row=0, column=2)
+        self.textboxcfgfile.insert(tk.END, self.cfgfile)
 
         self.button1 = tk.Button(self, text='GO', pady=10)
         self.button1['command'] = self.button1_clicked
@@ -99,17 +97,17 @@ class App(tk.Tk):
     def textbox_init(self):
         # first destroy the text boxes before reading in new
         textbox_count = len(self.textbox_key)
+        print(self.textbox_key.keys())
         for index in range(textbox_count):
             self.textbox_key[index].destroy()
             self.textbox_value[index].destroy()
             self.label_index[index].destroy()
+            print("detroyed:",index)
+            pass
         self.buttonread.destroy()
         self.buttonsave.destroy()
         self.insert.destroy()
 
-        self.textbox_key = {}
-        self.textbox_value = {}
-        self.label_index = {}
         self.textbox_key = {}
         self.textbox_value = {}
         self.label_index = {}
@@ -144,6 +142,7 @@ class App(tk.Tk):
         textbox.grid(row=index+self.rowoffset, column=2)
         textbox.insert(tk.END, value)
         self.textbox_value[index] = textbox
+        print("create:",index,key,value)
 
     def get_textboxes(self):
         print("TextBoxes count:",len(self.textbox_key))
@@ -171,16 +170,11 @@ class App(tk.Tk):
 
 
     def buttoninsert_clicked(self):
-        # parameter from text boxes
-        self.buttonread.destroy()
-        self.buttonsave.destroy()
-        self.insert.destroy()
-        print("len of textbox_key",len(self.textbox_key))
         self.add_cfgtextbox(len(self.textbox_key),"","")
-        #self.cfgdata[len(self.textbox_key)] = ""
-        #self.rowoffset += 1
-        #self.textbox_init()
-        self.create_textboxes()
+        self.insert.grid(row = self.rowoffset+len(self.textbox_key), column = 0, pady=5)
+
+    def buttoncommit_clicked(self):
+        pass
 
     def buttonsave_clicked(self):
         # save parameters
@@ -189,9 +183,10 @@ class App(tk.Tk):
 
         print("newcfg len",len(self.newcfg))
         print(self.newcfg)
+        filename = self.textboxcfgfile.get(1.0, "end-1c")
         pass
         try:
-            with open(self.cfgfile, "w") as filehandle:
+            with open(filename, "w") as filehandle:
                 for key in self.newcfg:
                     keyvalue = str(key)+","+str(self.newcfg[key])+"\n"
                     filehandle.write(keyvalue)
@@ -201,7 +196,8 @@ class App(tk.Tk):
         filehandle.close()
 
         # Read config from file
-        cfg = Programconfig(self.cfgfile)
+        filename = self.textboxcfgfile.get(1.0, "end-1c")
+        cfg = Programconfig(filename)
         cfg.readconfig()
         cfg.printconfig()
         self.cfgdata = cfg.cfgdata
@@ -213,7 +209,8 @@ class App(tk.Tk):
     def buttonread_clicked(self):
         # Read config from file
         print("READ EVENT:")
-        cfg = Programconfig(self.cfgfile)
+        filename = self.textboxcfgfile.get(1.0, "end-1c")
+        cfg = Programconfig(filename)
         cfg.readconfig()
         cfg.printconfig()
         self.cfgdata = cfg.cfgdata
