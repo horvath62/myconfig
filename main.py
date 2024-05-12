@@ -236,7 +236,7 @@ if __name__ == '__main__':
 
     print(cfg.cfgfile)
 
-    app = App("LineMaker", cfg.cfgfile, cfg.cfgdata, '500x300')
+    app = App("Program Config", cfg.cfgfile, cfg.cfgdata, '500x300')
     app.create_textboxes()
 
     '''
