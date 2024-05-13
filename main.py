@@ -111,10 +111,32 @@ class App(tk.Tk):
         self.button23['command'] = self.button23_clicked
         self.button23.grid(row = 2, column = 3)
 
+        # Set the offset for the starting row of the dynamic text input fields below the buttons.
+        self.rowoffset = 4
 
+    def button10_clicked(self):
+        pass
 
+    def button11_clicked(self):
+        pass
 
-        self.rowoffset = 3
+    def button12_clicked(self):
+        pass
+
+    def button13_clicked(self):
+        pass
+
+    def button20_clicked(self):
+        pass
+
+    def button21_clicked(self):
+        pass
+
+    def button22_clicked(self):
+        pass
+
+    def button23_clicked(self):
+        pass
 
     def textbox_init(self):
         # first destroy the text boxes before reading in new
@@ -239,31 +261,6 @@ class App(tk.Tk):
         self.textbox_init()
         self.create_textboxes()
 
-    def button10_clicked(self):
-        pass
-
-    def button11_clicked(self):
-        pass
-
-    def button12_clicked(self):
-        pass
-
-    def button13_clicked(self):
-        pass
-
-    def button20_clicked(self):
-        pass
-
-    def button21_clicked(self):
-        pass
-
-    def button22_clicked(self):
-        pass
-
-    def button23_clicked(self):
-        pass
-
-
 
 
 if __name__ == '__main__':
@@ -276,12 +273,6 @@ if __name__ == '__main__':
 
     app = App("Program Config", cfg.cfgfile, cfg.cfgdata, '500x300')
     app.create_textboxes()
-
-    '''
-    for index, key in enumerate(cfg.cfgdata, start=0):
-        print("==>",index,key,cfg.cfgdata[key])
-        app.add_cfgtextbox(index,key,cfg.cfgdata[key])
-    '''
 
     app.mainloop()
 
