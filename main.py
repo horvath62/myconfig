@@ -79,17 +79,39 @@ class App(tk.Tk):
         self.textboxcfgfile.grid(row=0, column=2)
         self.textboxcfgfile.insert(tk.END, self.cfgfile)
 
-        self.button1 = tk.Button(self, text='GO', pady=10)
-        self.button1['command'] = self.button1_clicked
-        self.button1.grid(row = 1, column = 0)
+        self.button10 = tk.Button(self, text='GO', pady=10)
+        self.button10['command'] = self.button10_clicked
+        self.button10.grid(row = 1, column = 0, pady = 10)
 
-        self.button2 = tk.Button(self, text='GameID', pady=10)
-        self.button2['command'] = self.button2_clicked
-        self.button2.grid(row = 1, column = 1)
+        self.button11 = tk.Button(self, text='Button11', pady=10)
+        self.button11['command'] = self.button11_clicked
+        self.button11.grid(row = 1, column = 1)
 
-        self.button3 = tk.Button(self, text='Covers', pady=10)
-        self.button3['command'] = self.button1_clicked
-        self.button3.grid(row = 1, column = 2)
+        self.button12 = tk.Button(self, text='Button12', pady=10)
+        self.button12['command'] = self.button12_clicked
+        self.button12.grid(row = 1, column = 2)
+
+        self.button13 = tk.Button(self, text='Button13', pady=10)
+        self.button13['command'] = self.button13_clicked
+        self.button13.grid(row = 1, column = 3)
+
+        self.button20 = tk.Button(self, text='button20', pady=10)
+        self.button20['command'] = self.button20_clicked
+        self.button20.grid(row = 2, column = 0, pady = 10)
+
+        self.button21 = tk.Button(self, text='Button21', pady=10)
+        self.button21['command'] = self.button21_clicked
+        self.button21.grid(row = 2, column = 1)
+
+        self.button22 = tk.Button(self, text='Button22', pady=10)
+        self.button22['command'] = self.button22_clicked
+        self.button22.grid(row = 2, column = 2)
+
+        self.button23 = tk.Button(self, text='Button23', pady=10)
+        self.button23['command'] = self.button23_clicked
+        self.button23.grid(row = 2, column = 3)
+
+
 
 
         self.rowoffset = 3
@@ -217,14 +239,30 @@ class App(tk.Tk):
         self.textbox_init()
         self.create_textboxes()
 
-    def button0_clicked(self):
+    def button10_clicked(self):
         pass
 
-    def button1_clicked(self):
+    def button11_clicked(self):
         pass
 
-    def button2_clicked(self):
+    def button12_clicked(self):
         pass
+
+    def button13_clicked(self):
+        pass
+
+    def button20_clicked(self):
+        pass
+
+    def button21_clicked(self):
+        pass
+
+    def button22_clicked(self):
+        pass
+
+    def button23_clicked(self):
+        pass
+
 
 
 
