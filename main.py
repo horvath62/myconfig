@@ -150,7 +150,7 @@ class App(tk.Tk):
             pass
         self.buttonread.destroy()
         self.buttonsave.destroy()
-        self.insert.destroy()
+        self.buttoninsert.destroy()
 
         self.textbox_key = {}
         self.textbox_value = {}
@@ -163,9 +163,9 @@ class App(tk.Tk):
             print("==>", index, key, self.cfgdata[key])
             self.add_cfgtextbox(index, key, self.cfgdata[key])
 
-        self.insert = tk.Button(self, text='INSERT')
-        self.insert['command'] = self.buttoninsert_clicked
-        self.insert.grid(row = self.rowoffset+len(self.textbox_key), column = 0, pady=5)
+        self.buttoninsert = tk.Button(self, text='INSERT')
+        self.buttoninsert['command'] = self.buttoninsert_clicked
+        self.buttoninsert.grid(row = self.rowoffset+len(self.textbox_key), column = 0, pady=5)
         self.buttonsave = tk.Button(self, text='SAVE')
         self.buttonsave['command'] = self.buttonsave_clicked
         self.buttonsave.grid(row = 0, column = 4)
@@ -215,7 +215,7 @@ class App(tk.Tk):
 
     def buttoninsert_clicked(self):
         self.add_cfgtextbox(len(self.textbox_key),"","")
-        self.insert.grid(row = self.rowoffset+len(self.textbox_key), column = 0, pady=5)
+        self.buttoninsert.grid(row = self.rowoffset+len(self.textbox_key), column = 0, pady=5)
 
     def buttoncommit_clicked(self):
         pass
