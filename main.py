@@ -71,6 +71,8 @@ class App(tk.Tk):
         self.cfgdata = cfgdata
         self.newcfg = {}
 
+        # ### STATIC WIDGETS AT THE TOP ###
+
         self.check1 = tk.Checkbutton(self)
         self.check1.grid(row=1,column=0)
         self.check2 = tk.Checkbutton(self)
@@ -78,17 +80,15 @@ class App(tk.Tk):
         self.check3 = tk.Checkbutton(self)
         self.check3.grid(row=3, column=0)
 
-
-
         self.labelfilename = tk.Label(self, text="Config file:")
         self.labelfilename.grid(row = 0, column = 2)
 
         self.buttonsave = tk.Button(self, text='SAVE')
         self.buttonsave['command'] = self.buttonsave_clicked
-        self.buttonsave.grid(row = 0, column = 1)
+        self.buttonsave.grid(row = 0, column = 5)
         self.buttonread = tk.Button(self, text='READ')
         self.buttonread['command'] = self.buttonread_clicked
-        self.buttonread.grid(row = 0, column = 0)
+        self.buttonread.grid(row = 0, column = 4)
 
 
 
@@ -198,6 +198,10 @@ class App(tk.Tk):
         textbox.grid(row=index+self.rowoffset, column=3)
         textbox.insert(tk.END, value)
         self.textbox_value[index] = textbox
+
+        buttondelete[index] = tk.Button(self, text="delete", command = lambda idx=index: button_delete(idx))
+
+
         # print("create:",index,key,value)
 
     def get_textboxes(self):
