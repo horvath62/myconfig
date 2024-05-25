@@ -59,12 +59,12 @@ class Programconfig:
             print("Exception in write")
 
 class App(tk.Tk):
-    def __init__(self, title, cfgfile, cfgdata, Geometry):
+    def __init__(self, title, cfgfile, cfgdata):
         super().__init__()
         self.cfgfile = cfgfile
         self.title(title)
-        self.geometry(Geometry)
 
+        # Dynamic widgets go into dictionaries
         self.textbox_key = {}
         self.textbox_value = {}
         self.label_index = {}
@@ -73,65 +73,77 @@ class App(tk.Tk):
         self.cfgdata = cfgdata
         self.newcfg = {}
 
+        # Setting columns widths variables
+        self.col_width = {}
+        self.col_width[0] = 5
+        self.col_width[1] = 10
+        self.col_width[2] = 32
+        self.col_width[3] = 32
+        self.col_width[4] = 10
+        self.col_width[5] = 10
+
+        #adjust total window size
+        x_pixels_per_character = 9  # Hack because not easy to figure out, depends on font
+        y_pixels_per_character = 9  # Hack because not easy to figure out, depends on font
+        geom = str(sum(self.col_width.values())*x_pixels_per_character)+'x600'
+        print(geom)
+        self.geometry(geom)
+
         # ### STATIC WIDGETS AT THE TOP ###
 
-        self.check1 = tk.Checkbutton(self)
+        self.check1 = tk.Checkbutton(self,width=self.col_width[0], anchor="e")
         self.check1.grid(row=1,column=0)
-        self.check2 = tk.Checkbutton(self)
+        self.check2 = tk.Checkbutton(self,width=self.col_width[0], anchor="e")
         self.check2.grid(row=2, column=0)
-        self.check3 = tk.Checkbutton(self)
+        self.check3 = tk.Checkbutton(self,width=self.col_width[0], anchor="e",bg="pink")
         self.check3.grid(row=3, column=0)
 
-        self.labelfilename = tk.Label(self, text="Config file:")
+        self.labelfilename = tk.Label(self, width=self.col_width[2], text="Config file:", anchor="e")
         self.labelfilename.grid(row = 0, column = 2)
 
-        self.buttonsave = tk.Button(self, text='SAVE')
+        self.buttonsave = tk.Button(self, width=self.col_width[5], text='SAVE')
         self.buttonsave['command'] = self.buttonsave_clicked
         self.buttonsave.grid(row = 0, column = 5)
-        self.buttonread = tk.Button(self, text='READ')
+        self.buttonread = tk.Button(self, width=self.col_width[4], text='READ')
         self.buttonread['command'] = self.buttonread_clicked
         self.buttonread.grid(row = 0, column = 4)
 
-
-
-
-
-        self.label1 = tk.Label(self, text="Check1",anchor="w")
+        self.label1 = tk.Label(self, text="Check1", width=self.col_width[1],anchor="w")
         self.label1.grid(row=1, column=1)
+        self.label2 = tk.Label(self, text="Check2", width=self.col_width[1],anchor="w")
+        self.label2.grid(row=2, column=1)
+        self.label3 = tk.Label(self, text="Check3", width=self.col_width[1],anchor="w",bg="pink")
+        self.label3.grid(row=3, column=1)
 
-
-
-
-
-        self.textboxcfgfile= tk.Text(self, height=1, width=20)
+        self.textboxcfgfile= tk.Text(self, height=1, width=self.col_width[3])
         self.textboxcfgfile.grid(row=0, column=3)
         self.textboxcfgfile.insert(tk.END, self.cfgfile)
 
-        self.button10 = tk.Button(self, text='GO', pady=10)
+        self.button10 = tk.Button(self, text='GO', width=self.col_width[0], pady=10)
         self.button10['command'] = self.button10_clicked
         self.button10.grid(row = 4, column = 0, pady = 10)
 
-        self.button11 = tk.Button(self, text='Button11', pady=10)
+        self.button11 = tk.Button(self, text='Button11', width=self.col_width[1], pady=10)
         self.button11['command'] = self.button11_clicked
         self.button11.grid(row = 4, column = 1)
 
-        self.button12 = tk.Button(self, text='Button12', pady=10)
+        self.button12 = tk.Button(self, text='Button12', width=self.col_width[2], pady=10)
         self.button12['command'] = self.button12_clicked
         self.button12.grid(row = 4, column = 2)
 
-        self.button13 = tk.Button(self, text='Button13', pady=10)
+        self.button13 = tk.Button(self, text='Button13', width=self.col_width[3], pady=10)
         self.button13['command'] = self.button13_clicked
         self.button13.grid(row = 4, column = 3)
 
-        self.button21 = tk.Button(self, text='Button21', pady=10)
+        self.button21 = tk.Button(self, text='Button21', width=self.col_width[1], pady=10)
         self.button21['command'] = self.button21_clicked
         self.button21.grid(row = 5, column = 1)
 
-        self.button22 = tk.Button(self, text='Button22', pady=10)
+        self.button22 = tk.Button(self, text='Button22', width=self.col_width[2], pady=10)
         self.button22['command'] = self.button22_clicked
         self.button22.grid(row = 5, column = 2)
 
-        self.button23 = tk.Button(self, text='Button23', pady=10)
+        self.button23 = tk.Button(self, text='Button23', width=self.col_width[3], pady=10)
         self.button23['command'] = self.button23_clicked
         self.button23.grid(row = 5, column = 3)
 
@@ -182,28 +194,28 @@ class App(tk.Tk):
             # print("==>", index, key, self.cfgdata[key])
             self.add_cfgtextbox(index, key, self.cfgdata[key])
 
-        self.buttoninsert = tk.Button(self, text='INSERT')
+        self.buttoninsert = tk.Button(self, text='INSERT', width=self.col_width[1])
         self.buttoninsert['command'] = self.buttoninsert_clicked
-        self.buttoninsert.grid(row = self.rowoffset+len(self.textbox_key), column = 0, pady=5)
+        self.buttoninsert.grid(row = self.rowoffset+len(self.textbox_key), column=1, pady=5)
 
     def add_cfgtextbox(self,index,key,value):
         # print(">>",index, key, value)
-        label = tk.Label(self, text=index)
+        label = tk.Label(self, text=index, width=self.col_width[1])
         label.grid(row=index+self.rowoffset, column=1)
         self.label_index[index] = label
-        textbox = tk.Text(self, height=1, width=20)
+        textbox = tk.Text(self, height=1, width=self.col_width[2])
         textbox.grid(row=index+self.rowoffset, column=2)
         textbox.insert(tk.END, key)
         self.textbox_key[index] = textbox
-        textbox = tk.Text(self, height=1, width=20)
+        textbox = tk.Text(self, height=1, width=self.col_width[3])
         textbox.grid(row=index+self.rowoffset, column=3)
         textbox.insert(tk.END, value)
         self.textbox_value[index] = textbox
 
-        button = tk.Button(self, text="clear", command=lambda idx=index: self.buttonclear_clicked(idx))
+        button = tk.Button(self, width=self.col_width[4], text="clear", command=lambda idx=index: self.buttonclear_clicked(idx))
         button.grid(row=index+self.rowoffset, column=4)
         self.button_clear[index] = button
-        button = tk.Button(self, text="delete", command=lambda idx=index: self.buttondelete_clicked(idx))
+        button = tk.Button(self, width=self.col_width[5], text="delete", command=lambda idx=index: self.buttondelete_clicked(idx))
         button.grid(row=index + self.rowoffset, column=5)
         self.button_delete[index] = button
         # print("create:",index,key,value)
@@ -231,7 +243,7 @@ class App(tk.Tk):
 
     def buttoninsert_clicked(self):
         self.add_cfgtextbox(len(self.textbox_key),"","")
-        self.buttoninsert.grid(row = self.rowoffset+len(self.textbox_key), column = 0, pady=5)
+        self.buttoninsert.grid(row = self.rowoffset+len(self.textbox_key), column=1, pady=5)
 
     def buttoncommit_clicked(self):
         pass
@@ -289,7 +301,7 @@ if __name__ == '__main__':
 
     # print(cfg.cfgfile)
 
-    app = App("Program Config", cfg.cfgfile, cfg.cfgdata, '600x400')
+    app = App("Program Config", cfg.cfgfile, cfg.cfgdata)
     app.create_textboxes()
 
     app.mainloop()
