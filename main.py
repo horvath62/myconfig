@@ -42,7 +42,7 @@ class Programconfig:
     def printconfig(self):
         print("CONFIG PARAMETERS:")
         for key in self.cfgdata:
-            print (key, self.cfgdata[key])
+            print(key, self.cfgdata[key])
         if len(self.cfgignore) > 0:
             print("IGNORED in config file:")
             for line in self.cfgignore:
@@ -68,6 +68,8 @@ class App(tk.Tk):
         self.textbox_key = {}
         self.textbox_value = {}
         self.label_index = {}
+        self.button_clear = {}
+        self.button_delete = {}
         self.cfgdata = cfgdata
         self.newcfg = {}
 
@@ -158,22 +160,23 @@ class App(tk.Tk):
         pass
 
     def textbox_init(self):
-        # first destroy the text boxes before reading in new
+        # first destroy the old text boxes before reading in new
         textbox_count = len(self.textbox_key)
-        # print(self.textbox_key.keys())
         for index in range(textbox_count):
             self.textbox_key[index].destroy()
             self.textbox_value[index].destroy()
             self.label_index[index].destroy()
-            # print("destroyed:",index)
-            pass
-        self.buttoninsert.destroy()
+            self.button_delete[index].destroy()
+            self.button_clear[index].destroy()
 
+            print("destroyed:",index)
+        self.buttoninsert.destroy()
         self.textbox_key = {}
         self.textbox_value = {}
         self.label_index = {}
+        self.button_delete = {}
+        self.button_clear = {}
         self.newcfg = {}
-
 
     def create_textboxes(self):
         for index, key in enumerate(self.cfgdata, start=0):
@@ -183,7 +186,6 @@ class App(tk.Tk):
         self.buttoninsert = tk.Button(self, text='INSERT')
         self.buttoninsert['command'] = self.buttoninsert_clicked
         self.buttoninsert.grid(row = self.rowoffset+len(self.textbox_key), column = 0, pady=5)
-
 
     def add_cfgtextbox(self,index,key,value):
         # print(">>",index, key, value)
@@ -199,10 +201,14 @@ class App(tk.Tk):
         textbox.insert(tk.END, value)
         self.textbox_value[index] = textbox
 
-        buttondelete[index] = tk.Button(self, text="delete", command = lambda idx=index: button_delete(idx))
+        button = tk.Button(self, text="clear", command=lambda idx=index: self.buttonclear_clicked(idx))
+        button.grid(row=index+self.rowoffset, column=4)
+        self.button_clear[index] = button
+        button = tk.Button(self, text="delete", command=lambda idx=index: self.buttondelete_clicked(idx))
+        button.grid(row=index + self.rowoffset, column=5)
+        self.button_delete[index] = button
 
-
-        # print("create:",index,key,value)
+        print("create:",index,key,value)
 
     def get_textboxes(self):
         # print("TextBoxes count:",len(self.textbox_key))
@@ -268,7 +274,14 @@ class App(tk.Tk):
         self.textbox_init()
         self.create_textboxes()
 
+    def buttondelete_clicked(self, idx):
+        # delete one config parameter
+        self.textbox_value[idx].delete(1.0,"end")
+        self.textbox_key[idx].delete(1.0,"end")
 
+    def buttonclear_clicked(self, idx):
+        self.textbox_value[idx].delete(1.0, "end")
+        self.textbox_value[idx].focus_set()
 
 if __name__ == '__main__':
 
