@@ -168,8 +168,7 @@ class App(tk.Tk):
             self.label_index[index].destroy()
             self.button_delete[index].destroy()
             self.button_clear[index].destroy()
-
-            print("destroyed:",index)
+            #print("destroyed:",index)
         self.buttoninsert.destroy()
         self.textbox_key = {}
         self.textbox_value = {}
@@ -207,8 +206,7 @@ class App(tk.Tk):
         button = tk.Button(self, text="delete", command=lambda idx=index: self.buttondelete_clicked(idx))
         button.grid(row=index + self.rowoffset, column=5)
         self.button_delete[index] = button
-
-        print("create:",index,key,value)
+        # print("create:",index,key,value)
 
     def get_textboxes(self):
         # print("TextBoxes count:",len(self.textbox_key))
