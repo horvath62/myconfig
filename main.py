@@ -82,10 +82,13 @@ class App(tk.Tk):
         self.col_width[4] = 10
         self.col_width[5] = 10
 
-        #adjust total window size
-        x_pixels_per_character = 9  # Hack because not easy to figure out, depends on font
-        y_pixels_per_character = 9  # Hack because not easy to figure out, depends on font
-        geom = str(sum(self.col_width.values())*x_pixels_per_character)+'x600'
+        # adjust total window size
+        x_pixels_per_character = 9  # This is a Hack because not easy to figure out, depends on font in each widget
+        # if you set the whole project to a fixed font and take padding in cell into account, could have dynamix window size.
+        #  otherwise just set this so the windows is wide and tall enough
+        y_pixels_per_character = 9  # Hack because not easy to figure out, depends on font in each widget
+        window_height = "600"   # in pizels, has same problem as width,  just set it here to fit ( or fix it)
+        geom = str(sum(self.col_width.values())*x_pixels_per_character)+'x'+str(window_height)
         print(geom)
         self.geometry(geom)
 
@@ -182,6 +185,8 @@ class App(tk.Tk):
             self.button_clear[index].destroy()
             #print("destroyed:",index)
         self.buttoninsert.destroy()
+        self.buttonclean.destroy()
+        # init dict of widgets ( the dynamic ones, the widgets are stored in these dict with index as the key)
         self.textbox_key = {}
         self.textbox_value = {}
         self.label_index = {}
@@ -197,6 +202,10 @@ class App(tk.Tk):
         self.buttoninsert = tk.Button(self, text='INSERT', width=self.col_width[1])
         self.buttoninsert['command'] = self.buttoninsert_clicked
         self.buttoninsert.grid(row = self.rowoffset+len(self.textbox_key), column=1, pady=5)
+
+        self.buttonclean = tk.Button(self, text='CLEAN UP, DONT SAVE', width=self.col_width[2])
+        self.buttonclean['command'] = self.button_clean_clicked
+        self.buttonclean.grid(row = self.rowoffset+len(self.textbox_key), column=2, pady=5)
 
     def add_cfgtextbox(self,index,key,value):
         # print(">>",index, key, value)
@@ -243,7 +252,31 @@ class App(tk.Tk):
 
     def buttoninsert_clicked(self):
         self.add_cfgtextbox(len(self.textbox_key),"","")
-        self.buttoninsert.grid(row = self.rowoffset+len(self.textbox_key), column=1, pady=5)
+        self.buttoninsert.grid(row=self.rowoffset+len(self.textbox_key), column=1, pady=5)
+        self.buttonclean.grid(row=self.rowoffset + len(self.textbox_key), column=2, pady=5)
+
+    def button_clean_clicked(self):
+        self.get_textboxes()
+        filename = "temp.cfg"
+        print("SAVING CONFIG FILE:", filename)
+        try:
+            with open(filename, "w") as filehandle:
+                for key in self.newcfg:
+                    keyvalue = str(key) + "," + str(self.newcfg[key]) + "\n"
+                    filehandle.write(keyvalue)
+                    # print(keyvalue)
+        except e:
+            print("Exception in write", e)
+
+        # Read config back from temp file
+        cfg = Programconfig(filename)
+        cfg.readconfig()
+        cfg.printconfig()
+        self.cfgdata = cfg.cfgdata
+        self.textbox_init()
+        self.create_textboxes()
+        filehandle.close()
+        # self.button_clean.grid(row=self.rowoffset + len(self.textbox_key), column=2, pady=5)
 
     def buttoncommit_clicked(self):
         pass
