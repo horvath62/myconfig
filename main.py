@@ -334,7 +334,7 @@ if __name__ == '__main__':
 
     # print(cfg.cfgfile)
 
-    app = App("Program Config", cfg.cfgfile, cfg.cfgdata)
+    app = App("Program Name", cfg.cfgfile, cfg.cfgdata)
     app.create_textboxes()
 
     app.mainloop()
